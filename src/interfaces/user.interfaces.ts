@@ -10,8 +10,10 @@ export interface iUserRequest {
 
 export interface iUser {
   id: string;
+  name: string;
+  email: string;
   created_at: Date;
   updated_at: Date;
   last_login: Date | null;
-  token: string;
+  phone_numbers: iPhoneNumberRequest[];
 }

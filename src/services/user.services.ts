@@ -2,7 +2,8 @@ import { AppDataSource } from "../data-source";
 import { PhoneNumber } from "../entities/phoneNumbers.entity";
 import { User } from "../entities/users.entity";
 import { AppError } from "../errors";
-import { iUserRequest } from "../interfaces/user.interfaces";
+import { iUser, iUserRequest } from "../interfaces/user.interfaces";
+import { userResponseSchema } from "../schemas/user.schemas";
 import { loginService } from "./login.services";
 
 export const createUserService = async (body: iUserRequest) => {
@@ -24,6 +25,15 @@ export const createUserService = async (body: iUserRequest) => {
   await phoneNumberRepo.save(newPhoneNumber);
 
   const userValidated = await loginService({ email: body.email, password: body.password });
+
+  return userValidated;
+};
+
+export const findOneUserService = async (user: User) => {
+  const userValidated: iUser = userResponseSchema.validateSync(user, {
+    stripUnknown: true,
+    abortEarly: false,
+  });
 
   return userValidated;
 };

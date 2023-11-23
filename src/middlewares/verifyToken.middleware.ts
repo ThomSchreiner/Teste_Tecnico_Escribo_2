@@ -17,7 +17,7 @@ export const verifyTokenMiddleware = async (req: Request, res: Response, next: N
     }
 
     const authUser = await AppDataSource.getRepository(User)
-      .findOneByOrFail({ id: decoded!.sub as string })
+      .findOneOrFail({ where: { id: decoded!.sub as string }, relations: { phone_numbers: true } })
       .catch(() => {
         throw new AppError("Invalid token because token owner is unavailable", 401);
       });

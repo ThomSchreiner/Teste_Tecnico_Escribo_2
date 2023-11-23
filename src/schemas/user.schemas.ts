@@ -15,9 +15,11 @@ export const userRequestSchema: ObjectSchema<iUserRequest> = yup.object().shape(
 });
 
 export const userResponseSchema: ObjectSchema<iUser> = yup.object().shape({
-  token: yup.string().required(),
+  phone_numbers: yup.array().of(phoneNumberRequestSchema).required(),
   last_login: yup.date().required().nullable(),
   updated_at: yup.date().required(),
   created_at: yup.date().required(),
+  email: yup.string().required(),
+  name: yup.string().required(),
   id: yup.string().required(),
 });

@@ -3,9 +3,8 @@ import { User } from "../entities/users.entity";
 import { compareSync } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { AppError } from "../errors";
-import { iLogin } from "../interfaces/login.interfaces";
-import { userResponseSchema } from "../schemas/user.schemas";
-import { iUser } from "../interfaces/user.interfaces";
+import { iLogin, iLoginResponse } from "../interfaces/login.interfaces";
+import { loginResponseSchema } from "../schemas/login.schemas";
 
 export const loginService = async (body: iLogin) => {
   const userRepo = AppDataSource.getRepository(User);
@@ -33,7 +32,7 @@ export const loginService = async (body: iLogin) => {
 
   await userRepo.update({ id: user.id }, { last_login: new Date().toISOString() });
 
-  const userValidated: iUser = userResponseSchema.validateSync(
+  const userValidated: iLoginResponse = loginResponseSchema.validateSync(
     { ...user, token },
     { stripUnknown: true, abortEarly: false }
   );
