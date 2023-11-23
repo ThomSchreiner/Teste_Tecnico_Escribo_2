@@ -2,8 +2,7 @@ import { AppDataSource } from "../data-source";
 import { PhoneNumber } from "../entities/phoneNumbers.entity";
 import { User } from "../entities/users.entity";
 import { AppError } from "../errors";
-import { iUser, iUserRequest } from "../interfaces/user.interfaces";
-import { userResponseSchema } from "../schemas/user.schemas";
+import { iUserRequest } from "../interfaces/user.interfaces";
 import { loginService } from "./login.services";
 
 export const createUserService = async (body: iUserRequest) => {
