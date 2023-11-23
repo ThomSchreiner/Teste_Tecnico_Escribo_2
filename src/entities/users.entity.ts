@@ -41,6 +41,9 @@ export class User {
   @DeleteDateColumn()
   deleted_at: Date;
 
+  @Column({ type: "timestamp", nullable: true })
+  last_login: Date;
+
   @OneToMany(() => PhoneNumber, (phoneNumber) => phoneNumber.user)
   phone_numbers: PhoneNumber[];
 }

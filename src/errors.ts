@@ -17,6 +17,10 @@ export const handleError = (err: Error, req: Request, res: Response, next: NextF
     return res.status(err.statusCode).json({ message: err.message });
   }
 
+  if (err instanceof ValidationError) {
+    return res.status(400).json({ message: err.errors });
+  }
+
   console.log(err);
 
   return res.status(500).json({ message: "Internal Server Error!" });

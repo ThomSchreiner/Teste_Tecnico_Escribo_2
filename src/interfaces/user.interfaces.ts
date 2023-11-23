@@ -7,3 +7,11 @@ export interface iUserRequest {
   password: string;
   confirm_password: string;
 }
+
+export interface iUser {
+  id: string;
+  created_at: Date;
+  updated_at: Date;
+  last_login: Date | null;
+  token: string;
+}

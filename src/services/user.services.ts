@@ -2,7 +2,9 @@ import { AppDataSource } from "../data-source";
 import { PhoneNumber } from "../entities/phoneNumbers.entity";
 import { User } from "../entities/users.entity";
 import { AppError } from "../errors";
-import { iUserRequest } from "../interfaces/user.interfaces";
+import { iUser, iUserRequest } from "../interfaces/user.interfaces";
+import { userResponseSchema } from "../schemas/user.schemas";
+import { loginService } from "./login.services";
 
 export const createUserService = async (body: iUserRequest) => {
   const userRepo = AppDataSource.getRepository(User);
@@ -20,8 +22,9 @@ export const createUserService = async (body: iUserRequest) => {
   const newPhoneNumber = body.phone_numbers.map((phoneNumber) =>
     phoneNumberRepo.create({ ...phoneNumber, user: newUser })
   );
-
   await phoneNumberRepo.save(newPhoneNumber);
 
-  return { ...newUser, phone_numbers: newPhoneNumber };
+  const userValidated = await loginService({ email: body.email, password: body.password });
+
+  return userValidated;
 };
