@@ -17,12 +17,12 @@ export const loginService = async (body: iLogin) => {
         console.log();
         console.log(isValidPassword);
         console.log();
-        throw new AppError("Email or password incorrect", 401);
+        throw new AppError("Email or password invalid", 401);
       }
       return res;
     })
     .catch(() => {
-      throw new AppError("Email or password incorrect", 401);
+      throw new AppError("Email or password invalid", 401);
     });
 
   const token = sign({}, process.env.SECRET_KEY || "", {
