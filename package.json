@@ -11,7 +11,9 @@
     "vercel-build": "yarn typeorm migration:run -d ./src/data-source.ts"
   },
   "dependencies": {
+    "@types/cors": "^2.8.17",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
