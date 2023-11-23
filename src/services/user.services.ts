@@ -1,11 +1,18 @@
 import { AppDataSource } from "../data-source";
 import { PhoneNumber } from "../entities/phoneNumbers.entity";
 import { User } from "../entities/users.entity";
+import { AppError } from "../errors";
 import { iUserRequest } from "../interfaces/user.interfaces";
 
 export const createUserService = async (body: iUserRequest) => {
   const userRepo = AppDataSource.getRepository(User);
   const phoneNumberRepo = AppDataSource.getRepository(PhoneNumber);
+
+  await userRepo.findOneBy({ email: body.email }).then((res) => {
+    if (res?.id) {
+      throw new AppError("This email already used", 409);
+    }
+  });
 
   const newUser = userRepo.create(body);
   await userRepo.save(newUser);
